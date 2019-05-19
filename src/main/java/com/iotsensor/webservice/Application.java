@@ -3,6 +3,15 @@ package com.iotsensor.webservice;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * 
+ * Application.java
+ * @description 
+ * Main class
+ * 
+ * @author SY
+ *
+ */
 @SpringBootApplication
 public class Application {
 	

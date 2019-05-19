@@ -1,30 +1,33 @@
 package com.iotsensor.webservice.web;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import org.apache.commons.codec.binary.StringUtils;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.iotsensor.webservice.domain.SensorData;
-import com.iotsensor.webservice.domain.SensorDataRepository;
-import com.iotsensor.webservice.dto.sensordata.SensorDataSaveRequestDto;
+import com.iotsensor.webservice.dto.SensorDataSaveRequestDto;
+import com.iotsensor.webservice.dto.SensorDataSearchDto;
+import com.iotsensor.webservice.service.SensorDataService;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * 
+ * WebRestController.java
+ * @description 
+ * Webservice 처리를 위한 controller
+ * 
+ * @author SY
+ *
+ */
 @RestController
 @AllArgsConstructor
 public class WebRestController {
 
-	private SensorDataRepository sensorDataRepository;
+	private SensorDataService sensorDataService;
 	
 	@GetMapping("/")
 	public String main() {
@@ -34,33 +37,63 @@ public class WebRestController {
 	/**
 	 * Sensor data 삽입
 	 * 
-	 * ex) 
+	 * SensorDataSaveRequestDto(deviceId, serviceId, sensorCode)로 호출 
 	 * 
 	 * @param dto
 	 */
 	@PostMapping("/api/addData")
 	public void saveRatings(@RequestBody SensorDataSaveRequestDto dto) {
-		sensorDataRepository.save(dto.toEntity());
+		getSensorDataService().saveSensorData(dto.toEntity());
 	}
 	
+	/**
+	 * 
+	 * @description
+	 * Device ID 로 SensorData 조회
+	 *
+	 * @param deviceId
+	 * @return List<SensorDataSearchDto>
+	 */
 	@GetMapping("/api/search/deviceId/{deviceId}")
-	public List<SensorData> searchDataByDeviceId(@PathVariable("deviceId") String deviceId)
+	public List<SensorDataSearchDto> searchDataByDeviceId(@PathVariable("deviceId") String deviceId)
 	{
-		return sensorDataRepository.findByDeviceId(deviceId);
+		return getSensorDataService().findByDeviceId(deviceId);
 	}
 	
+	/**
+	 * 
+	 * @description
+	 * Service ID 로 SensorData 조회
+	 *
+	 * @param serviceId
+	 * @return List<SensorDataSearchDto>
+	 */
 	@GetMapping("/api/search/serviceId/{serviceId}")
-	public List<SensorData> searchDataByServiceId(@PathVariable("serviceId") String serviceId)
+	public List<SensorDataSearchDto> searchDataByServiceId(@PathVariable("serviceId") String serviceId)
 	{
-		return sensorDataRepository.findByServiceId(serviceId);
+		return getSensorDataService().findByServiceId(serviceId);
 	}
 	
+	/**
+	 * 
+	 * @description
+	 * 생성 날짜 기준으로 SensorData 조회
+	 *
+	 * @param date
+	 * @return List<SensorDataSearchDto>
+	 */
 	@GetMapping("/api/search/date/{date}")
-	public List<SensorData> searchDataByDate(@DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable("date") String date)
+	public List<SensorDataSearchDto> searchDataByDate(@PathVariable("date") String date)
 	{
-		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime before = StringUtils.equals(date, "default") ? now.minusDays(5) : LocalDateTime.of(LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE), LocalTime.of(0,0,0));
-		
-		return sensorDataRepository.findByCreatedDateBetween(before, now);
+		return getSensorDataService().findByCreatedDateBetween(date);
 	}
+
+	public SensorDataService getSensorDataService() {
+		return sensorDataService;
+	}
+
+	public void setSensorDataService(SensorDataService sensorDataService) {
+		this.sensorDataService = sensorDataService;
+	}
+	
 }

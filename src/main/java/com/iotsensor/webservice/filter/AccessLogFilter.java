@@ -14,6 +14,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * AccessLogFilter.java
+ * @description 
+ * Api 호출 시 Access log 생성 (호출 URL, Agent, Access time)
+ * 
+ * @author SY
+ *
+ */
 public class AccessLogFilter implements Filter{
 	
 	private static final Logger logger = LoggerFactory.getLogger(AccessLogFilter.class);
@@ -26,31 +35,25 @@ public class AccessLogFilter implements Filter{
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		
-		String remoteAddr = StringUtils.defaultString(request.getRemoteAddr(),"-");
-		String url = (req.getRequestURL() ==null)?"":req.getRequestURL().toString();
-		String queryString = StringUtils.defaultIfEmpty(req.getQueryString(),"");
-		String refer = StringUtils.defaultString(req.getHeader("Refer"),"-");
-		String agent = StringUtils.defaultString(req.getHeader("User-Agent"),"-");
+		String url = (req.getRequestURL() == null) ? "" : req.getRequestURL().toString();
+		String queryString = StringUtils.defaultIfEmpty(req.getQueryString(), "");
+		String agent = StringUtils.defaultString(req.getHeader("User-Agent"), "-");
 		String fullUrl = url;
-		fullUrl += StringUtils.isNotEmpty(queryString)? "?"+queryString:queryString;
+		fullUrl += StringUtils.isNotEmpty(queryString) ? "?" + queryString : queryString;
 		
-		StringBuffer result = new StringBuffer();
-		result.append(":").
-		append(remoteAddr)
-		.append(":")
-		.append(fullUrl)
-		.append(":")
-		.append(refer)
-		.append(":")
-		.append(agent);
-		logger.info("LOG FILTER" + result.toString());
 		long startDate = System.currentTimeMillis();
 		chain.doFilter(req, response);
 		long endDate = System.currentTimeMillis();
 		String uri = req.getRequestURI();
+		
+		logger.info("==================================================================");
+		logger.info("URL : " + fullUrl);
+		logger.info("Agent : " + agent);
+		
 		if(uri.indexOf("swagger") == -1) {
-			logger.info("========================================\trestAPI Access Time:" + (double) (endDate - startDate) / 1000 + "초\t=====================================================");
+			logger.info("Access Time : " + (double) (endDate - startDate) + "ms");
 		}
+		logger.info("==================================================================");
 	}
 	
 	@Override

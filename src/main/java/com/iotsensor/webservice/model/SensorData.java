@@ -1,4 +1,4 @@
-package com.iotsensor.webservice.domain;
+package com.iotsensor.webservice.model;
 
 import java.time.LocalDateTime;
 
@@ -8,12 +8,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * 
+ * SensorData.java
+ * @description 
+ * 어플리케이션에서 사용할 SensorData Entity 명세
+ * 
+ * @author SY
+ *
+ */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @Getter
@@ -21,7 +33,7 @@ import lombok.ToString;
 public class SensorData{
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.AUTO) // 생성 시 Auto generate
 	private Long id;
 	
 	@Column(nullable = false)
@@ -29,11 +41,13 @@ public class SensorData{
 
 	private String serviceId;
 	
-	@Column(columnDefinition = "TEXT", nullable = false)
+	@Column(nullable = false)
 	private String sensorCode;
 	
+	@CreationTimestamp
 	private LocalDateTime createdDate;
 	
+	@UpdateTimestamp
 	private LocalDateTime modifiedDate;
 	
 	@Builder

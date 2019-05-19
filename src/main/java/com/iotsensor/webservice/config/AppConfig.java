@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -12,10 +13,20 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-import com.iotsensor.webservice.domain.SensorData;
-import com.iotsensor.webservice.domain.SensorDataRepository;
+import com.iotsensor.webservice.dao.SensorDataRepository;
 import com.iotsensor.webservice.filter.AccessLogFilter;
+import com.iotsensor.webservice.model.SensorData;
+import com.iotsensor.webservice.service.SensorDataService;
 
+/**
+ * 
+ * AppConfig.java
+ * @description 
+ * Application 관련 config
+ * 
+ * @author SY
+ *
+ */
 @Configuration
 public class AppConfig {
 
@@ -94,7 +105,7 @@ public class AppConfig {
 	}
 	
 	/**
-	 * AccessLog Filter 생성
+	 * AccessLog Filter bean 등록 및 pattern 추가
 	 * @return bean
 	 */
 	@Bean
@@ -103,5 +114,14 @@ public class AppConfig {
 		registrationBean.addUrlPatterns("/api/*");
 		return registrationBean;
 	}
+	
+	/**
+	 * ModelMapper bean 등록
+	 * @return
+	 */
+	@Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 	
 }

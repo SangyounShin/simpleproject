@@ -1,11 +1,20 @@
-package com.iotsensor.webservice.dto.sensordata;
+package com.iotsensor.webservice.dto;
 
-import com.iotsensor.webservice.domain.SensorData;
+import com.iotsensor.webservice.model.SensorData;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * 
+ * SensorDataSaveRequestDto.java
+ * @description 
+ * SensorData 저장을 위한 DTO
+ * 
+ * @author SY
+ *
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,5 +31,4 @@ public class SensorDataSaveRequestDto {
 				.sensorCode(sensorCode)
 				.build();
 	}
-
 }
