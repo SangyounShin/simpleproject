@@ -1,4 +1,4 @@
-package com.iotsensor.webservice.domain;
+package com.iotsensor.webservice.dao;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.iotsensor.webservice.domain.SensorData;
-import com.iotsensor.webservice.domain.SensorDataRepository;
+import com.iotsensor.webservice.dao.SensorDataRepository;
+import com.iotsensor.webservice.model.SensorData;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -41,12 +41,12 @@ public class SensorDataRepositoryTests {
 				.build());
 		
         //when
-        List<SensorData> ratingsList = sensorDataRepository.findAll();
+        List<SensorData> sensorDataList = sensorDataRepository.findAll();
 
         //then
-        SensorData ratings = ratingsList.get(0);
-        assertThat(ratings.getDeviceId(), is("D0001"));
-        assertThat(ratings.getSensorCode(), is("123456789aaa"));
+        SensorData data = sensorDataList.get(0);
+        assertThat(data.getDeviceId(), is("D0001"));
+        assertThat(data.getSensorCode(), is("123456789aaa"));
         
 	}
 	
@@ -68,5 +68,24 @@ public class SensorDataRepositoryTests {
 		SensorData sensorData = sensorDataList.get(0);
 		assertTrue(sensorData.getCreatedDate().isAfter(now));
 		assertTrue(sensorData.getModifiedDate().isAfter(now));
+	}
+	
+	@Test
+	public void findByDeviceId() {
+		
+		//given
+		sensorDataRepository.save(SensorData.builder()
+				.deviceId("TEST0001")
+				.serviceId("TEST0001")
+				.sensorCode("123456789aaa")
+				.build());
+		
+		//when
+		List<SensorData> sensorDataList = sensorDataRepository.findByDeviceId("TEST0001");
+		
+		//then
+		SensorData sensorData = sensorDataList.get(0);
+		assertThat(sensorData.getDeviceId(), is("TEST0001"));
+		assertThat(sensorData.getSensorCode(), is("123456789aaa"));
 	}
 }

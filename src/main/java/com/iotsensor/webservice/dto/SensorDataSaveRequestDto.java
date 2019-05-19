@@ -10,7 +10,7 @@ import lombok.Setter;
  * 
  * SensorDataSaveRequestDto.java
  * @description 
- * SensorData 저장을 위한 DTO
+ * SensorData save request 을 위한 DTO
  * 
  * @author SY
  *

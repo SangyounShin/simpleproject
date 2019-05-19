@@ -42,7 +42,7 @@ public class WebRestController {
 	 * @param dto
 	 */
 	@PostMapping("/api/addData")
-	public void saveRatings(@RequestBody SensorDataSaveRequestDto dto) {
+	public void saveData(@RequestBody SensorDataSaveRequestDto dto) {
 		getSensorDataService().saveSensorData(dto.toEntity());
 	}
 	

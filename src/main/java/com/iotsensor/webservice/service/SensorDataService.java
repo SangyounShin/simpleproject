@@ -49,7 +49,7 @@ public interface SensorDataService {
 	/**
 	 * 
 	 * @description
-	 * 생성 날짜 기준으로 SensorData 조회
+	 * 생성 날짜 기준 desc 정렬하여 SensorData 조회
 	 * parameter 가 "default" 인 경우 현재 날짜로부터 5일전 데이터 까지 조회
 	 *
 	 * @param date

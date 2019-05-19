@@ -61,11 +61,20 @@ public class DefaultSensorDataService implements SensorDataService{
 	@Override
 	public List<SensorDataSearchDto> findByCreatedDateBetween(String date) {
 		
-		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime before = StringUtils.equals(date, "default") ? now.minusDays(5) : LocalDateTime.of(LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE), LocalTime.of(0,0,0));
+		LocalDateTime now;
+		LocalDateTime before;
+		
+		if (StringUtils.equals(date, "default")) {
+			now = LocalDateTime.now();
+			before = now.minusDays(5);
+		}
+		else {
+			now = LocalDateTime.of(LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE), LocalTime.of(23,59,59));
+			before = LocalDateTime.of(LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE), LocalTime.of(0,0,0));
+		}
 				
 		return getSensorDataRepository().findByCreatedDateBetween(before, now)
-				.stream().map(sensorData -> getModelMapper().map(sensorData, SensorDataSearchDto.class)).collect(Collectors.toList());
+				.stream().sorted((s1, s2) -> s2.getCreatedDate().compareTo(s1.getCreatedDate())).map(sensorData -> getModelMapper().map(sensorData, SensorDataSearchDto.class)).collect(Collectors.toList());
 	}
 
 	public SensorDataRepository getSensorDataRepository() {
