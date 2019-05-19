@@ -1,0 +1,13 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      
+security:
+  user:
+    name: user
+    password: test
+  oauth2:
+    client:
+      client-id: foo
+      client-secret: bar
