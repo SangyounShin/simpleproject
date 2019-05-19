@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.apache.commons.codec.binary.StringUtils;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,7 +56,7 @@ public class WebRestController {
 	}
 	
 	@GetMapping("/api/search/date/{date}")
-	public List<SensorData> searchDataByDate(@PathVariable("date") String date)
+	public List<SensorData> searchDataByDate(@DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable("date") String date)
 	{
 		LocalDateTime now = LocalDateTime.now();
 		LocalDateTime before = StringUtils.equals(date, "default") ? now.minusDays(5) : LocalDateTime.of(LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE), LocalTime.of(0,0,0));
