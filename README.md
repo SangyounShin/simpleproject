@@ -104,7 +104,7 @@ http://localhost:8080/api/search/serviceId/S0002
 | --- | --- |
 | /api/search/date/{yyyyMMdd} | GET |
   
-  - yyyyMMdd 에 default 를 넣으면 현재부터 5분전 데이터 조회
+  - yyyyMMdd 에 default 를 넣으면 5분전 데이터 ~ 현재까지 조회
 
 ex)
 
