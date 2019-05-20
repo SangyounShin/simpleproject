@@ -66,7 +66,7 @@ public class DefaultSensorDataService implements SensorDataService{
 		
 		if (StringUtils.equals(date, "default")) {
 			now = LocalDateTime.now();
-			before = now.minusDays(5);
+			before = now.minusMinutes(5);
 		}
 		else {
 			now = LocalDateTime.of(LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE), LocalTime.of(23,59,59));

@@ -50,56 +50,42 @@ public class AppConfig {
 					.deviceId("D0001")
 					.serviceId("S0001")
 					.sensorCode("0000111001")
-					.createdDate(LocalDateTime.of(LocalDate.of(2019,1,1), LocalTime.of(0,0,0)))
-					.modifiedDate(LocalDateTime.of(LocalDate.of(2019,1,1), LocalTime.of(0,0,0)))
 					.build());
 	        
 	        repository.save(SensorData.builder()
 					.deviceId("D0002")
 					.serviceId("S0001")
 					.sensorCode("0000111022")
-					.createdDate(LocalDateTime.of(LocalDate.of(2019,1,1), LocalTime.of(12,30,0)))
-					.modifiedDate(LocalDateTime.of(LocalDate.of(2019,1,1), LocalTime.of(12,30,0)))
 					.build());
 	        
 	        repository.save(SensorData.builder()
 					.deviceId("D0002")
 					.serviceId("S0001")
 					.sensorCode("000011555")
-					.createdDate(LocalDateTime.of(LocalDate.of(2019,1,1), LocalTime.of(12,40,0)))
-					.modifiedDate(LocalDateTime.of(LocalDate.of(2019,1,1), LocalTime.of(12,40,0)))
 					.build());
 	        
 	        repository.save(SensorData.builder()
 					.deviceId("D0003")
 					.serviceId("S0002")
 					.sensorCode("0000111111")
-					.createdDate(LocalDateTime.of(LocalDate.of(2019,1,8), LocalTime.of(0,0,0)))
-					.modifiedDate(LocalDateTime.of(LocalDate.of(2019,1,8), LocalTime.of(0,0,0)))
 					.build());
 	        
 	        repository.save(SensorData.builder()
 					.deviceId("D0004")
 					.serviceId("S0002")
 					.sensorCode("0000111999")
-					.createdDate(LocalDateTime.of(LocalDate.of(2019,1,11), LocalTime.of(3,0,0)))
-					.modifiedDate(LocalDateTime.of(LocalDate.of(2019,1,11), LocalTime.of(3,0,0)))
 					.build());
 	        
 	        repository.save(SensorData.builder()
 					.deviceId("D0005")
 					.serviceId("S0003")
 					.sensorCode("22220111001")
-					.createdDate(LocalDateTime.of(LocalDate.of(2019,2,1), LocalTime.of(0,0,0)))
-					.modifiedDate(LocalDateTime.of(LocalDate.of(2019,2,1), LocalTime.of(0,0,0)))
 					.build());
 	        
 	        repository.save(SensorData.builder()
 					.deviceId("D0006")
 					.serviceId("S0004")
 					.sensorCode("990dasd111001")
-					.createdDate(LocalDateTime.now())
-					.modifiedDate(LocalDateTime.of(LocalDate.of(2019,2,1), LocalTime.of(0,0,0)))
 					.build());
 	    }
 	}
